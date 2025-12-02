@@ -30,7 +30,7 @@ function ask() {
     if (!cmd) return ask();
 
     if (cmd.toLowerCase() === "/q") {
-      console.log("Bye!");
+      console.log("Babayo!");
       rl.close();
       return;
     }
@@ -55,9 +55,9 @@ function ask() {
     const results = searchByPrefix(cmd, config); // now takes config for possible optimizations
     const limited = results.slice(0, config.MAX_RESULTS);
 
-    console.log(`\nHasil untuk "${cmd}" (menampilkan ${limited.length} dari ${results.length}):\n`);
+    console.log(`\nResult for "${cmd}" (showing ${limited.length} from ${results.length}):\n`);
     printResults(limited, config.COLUMNS, config.CELL_WIDTH, config.TABLE_MODE, truncate);
-    console.log(`\nTotal hasil: ${results.length}\n`);
+    console.log(`\nResult total: ${results.length}\n`);
 
     ask();
   });
