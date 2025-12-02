@@ -45,17 +45,19 @@ npm run dev
 
 ## 🧠 How It Works
 
-- The CLI loads a dictionary and performs:
+The CLI performs the following steps:
 
-- Pre-sorting of all words (case-insensitive)
+ - Pre-sorts all words (case-insensitive)
 
-- Binary lower-bound prefix lookup
+ - Finds the lower-bound match using binary search
 
-- Sequential collection of all matching words
+ - Collects all sequential matching prefixes
 
-- Optional table-format rendering
+ - Renders the output in table mode or plain mode
 
-- Field truncation and column fitting
+ - Fits columns automatically to terminal width
+
+ - Truncates long words for clean alignment
 
 ---
 ## 🖥️ Usage
@@ -66,7 +68,6 @@ After running the CLI, type any prefix:
 Example output:
 
 ![Demo](./assets/ex-usage-output.png "Preview result after searching")
-
 
 ---
 
@@ -88,6 +89,28 @@ Example output:
 ## 📜 License
 
 MIT — free to use, modify, and distribute.
+
+---
+
+## 🙏 Acknowledgements
+
+The dictionary data (`words_dictionary.json`) is sourced from the  
+**dwyl/english-words** project (MIT License):  
+https://github.com/dwyl/english-words
+
+Huge thanks to them for providing a high-quality open word list.
+
+---
+
+## 🙏 Credits
+
+This project includes dictionary data from:
+
+**dwyl/english-words**  
+Licensed under the MIT License.  
+Copyright © dwyl
+
+Repository: https://github.com/dwyl/english-words
 
 ---
 ## 👤 Author
