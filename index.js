@@ -6,7 +6,7 @@ import { loadConfig, saveConfig } from "./src/core/config.js";
 import { searchByPrefix } from "./src/core/search.js";
 
 // Constants
-import { CLI_USAGE, CLI_VERSION, QUIT_COMMANDS, REFRESH_UI_COMMANDS, CHECK_VERSION_COMMANDS, HELP_COMMANDS } from "./src/core/constants.js";
+import { CLI_VERSION, QUIT_COMMANDS, REFRESH_UI_COMMANDS, CHECK_VERSION_COMMANDS, HELP_COMMANDS, LANGUAGE_COMMANDS } from "./src/core/constants.js";
 
 // UI and printing
 import { printResults } from "./src/printers/index.js";
@@ -18,7 +18,13 @@ import { handleCommand } from "./src/commands/index.js";
 // Utilities
 import { truncate } from "./src/utils/truncate.js";
 
+// i18n
+import { setLanguage, t } from "./src/i18n/index.js";
+
 let config = loadConfig(); // single source of truth
+
+// Set language from config
+setLanguage(config.LANGUAGE);
 
 // === COMMAND LINE ARGUMENTS HANDLER ===
 function handleCommandLineArgs() {
@@ -29,7 +35,7 @@ function handleCommandLineArgs() {
 
     // Handle flags
     if (query === "--help" || query === "-h") {
-      console.log(CLI_USAGE);
+      console.log(generateUsage());
       process.exit(0);
     }
 
@@ -49,11 +55,11 @@ function performDirectSearch(query) {
   const limited = results.slice(0, config.MAX_RESULTS);
 
   if (limited.length === 0) {
-    console.log(`No words found starting with "${query}"`);
+    console.log(`${t('no_words_found')} "${query}"`);
     return;
   }
 
-  console.log(`Results for "${query}" (${limited.length}/${results.length}):\n`);
+  console.log(`${t('results_for')} "${query}" (${limited.length}/${results.length}):\n`);
   printResults(limited, config.COLUMNS, config.CELL_WIDTH, config.TABLE_MODE, truncate);
 }
 
@@ -67,13 +73,13 @@ function startInteractiveMode() {
   printHeader(config);
 
   function ask() {
-    rl.question("Type a command or search >> ", (input) => {
+    rl.question(t('interactive_prompt'), (input) => {
       const cmd = input.trim();
 
       if (!cmd) return ask();
 
       if (QUIT_COMMANDS.includes(cmd.toLowerCase())) {
-        console.log("Babayo!");
+        console.log(t('quit_command'));
         rl.close();
         return;
       }
@@ -84,7 +90,27 @@ function startInteractiveMode() {
       }
 
        if (HELP_COMMANDS.includes(cmd.toLowerCase())) {
-        console.log(CLI_USAGE,"\n");
+        console.log(generateUsage(),"\n");
+        return ask();
+      }
+
+      // Language command
+      if (LANGUAGE_COMMANDS.includes(cmd.split(' ')[0].toLowerCase())) {
+        const parts = cmd.split(' ');
+        if (parts.length === 2) {
+          const lang = parts[1].toLowerCase();
+          if (['en', 'id'].includes(lang)) {
+            config.LANGUAGE = lang;
+            setLanguage(lang);
+            saveConfig(config);
+            console.log(`\n${t('language_changed', lang)}\n`);
+            printHeader(config);
+          } else {
+            console.log(`\n${t('supported_languages')}: en, id\n`);
+          }
+        } else {
+          console.log(`\n${t('supported_languages')}: en, id\n`);
+        }
         return ask();
       }
 
@@ -117,9 +143,25 @@ function performSearch(query) {
   const results = searchByPrefix(query, config);
   const limited = results.slice(0, config.MAX_RESULTS);
 
-  console.log(`\nResult for "${query}" (showing ${limited.length} from ${results.length}):\n`);
+  console.log(`\n${t('results_for')} "${query}" (${t('showing_results')} ${limited.length} ${t('from')} ${results.length}):\n`);
   printResults(limited, config.COLUMNS, config.CELL_WIDTH, config.TABLE_MODE, truncate);
-  console.log(`\nResult total: ${results.length}\n`);
+  console.log(`\n${t('result_total')} ${results.length}\n`);
+}
+
+function generateUsage() {
+  return `${t('app_name')} v0.3.1\n
+${t('usage_title')}
+  wh [query]           ${t('usage_direct_search')}
+  wh                   ${t('usage_interactive')}
+
+${t('options_title')}
+  --help, -h           ${t('options_help')}
+  --version, -v        ${t('options_version')}
+
+${t('examples_title')}
+  wh cat               ${t('examples_cat')}
+  wh                   ${t('examples_interactive')}
+`;
 }
 
 // === MAIN EXECUTION ===

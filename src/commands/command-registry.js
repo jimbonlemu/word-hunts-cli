@@ -7,18 +7,18 @@ export const commandRegistry = {
         aliases: ["tbon"],
         action: "SET_TABLE_MODE",
         value: true,
-        msg: "Table active."
+        msgKey: "table_on"
     },
     "table off": {
         aliases: ["tboff"],
-        action: "SET_TABLE_MODE", 
+        action: "SET_TABLE_MODE",
         value: false,
-        msg: "Table inactive."
+        msgKey: "table_off"
     }
 };
 
 export const numericCommands = {
-    sres: { label: "Limit Result", action: "SET_MAX_RESULTS" },
-    scol: { label: "Number of Columns", action: "SET_COLUMNS" },
-    scw: { label: "Cell Width", action: "SET_CELL_WIDTH" }
+    sres: { action: "SET_MAX_RESULTS", labelKey: "limit_result" },
+    scol: { action: "SET_COLUMNS", labelKey: "number_of_columns" },
+    scw: { action: "SET_CELL_WIDTH", labelKey: "cell_width" }
 };

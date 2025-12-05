@@ -17,29 +17,11 @@ export const DEFAULT_CONFIG = {
   CELL_WIDTH: 12
 };
 
-export const MIN_WORD_LENGTH = 2;
-export const TERMINAL_WIDTH_DEFAULT = 80;
-
-export const CLI_USAGE = `
-Word Hunts CLI v${VERSION}
-
-USAGE:
-  wh [query]           Search for words starting with [query]
-  wh                   Start interactive mode
-
-OPTIONS:
-  --help, -h           Show this help
-  --version, -v        Show version
-
-EXAMPLES:
-  wh cat               Search words starting with "cat"
-  wh                   Start interactive mode
-`;
-
 export const CLI_VERSION = `${PACKAGE_NAME} v${VERSION}`;
 
 export const HELP_COMMANDS = ["--help","-h"];
 export const CHECK_VERSION_COMMANDS = ["--version","-v"];
 
 export const QUIT_COMMANDS = ["/q", "/quit", "/exit"];
+export const LANGUAGE_COMMANDS = ["/lang", "/language"];
 export const REFRESH_UI_COMMANDS = ["getui","/refs","/ui"];

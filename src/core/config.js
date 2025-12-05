@@ -8,7 +8,8 @@ let defaultConfig = {
     TABLE_MODE: true,
     MAX_RESULTS: 100,
     COLUMNS: 15,
-    CELL_WIDTH: 12
+    CELL_WIDTH: 12,
+    LANGUAGE: 'en'
 };
 
 export function loadConfig() {
