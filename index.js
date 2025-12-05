@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import readline from "readline";
 import { loadConfig, saveConfig } from "./lib/config.js";
 import { searchByPrefix } from "./lib/search.js";

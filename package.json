@@ -1,18 +1,43 @@
 {
-  "name": "tools",
+  "name": "word-hunts-cli",
+  "version": "0.1.0",
   "type": "module",
-  "version": "1.0.0",
+  "description": "Fast offline CLI tool for instant English word-prefix search",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+  "bin": {
+    "word-hunts": "./index.js",
+    "wh": "./index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "nodemon": "^3.1.10"
+  "files": [
+    "index.js",
+    "lib/",
+    "data/",
+    "scripts/",
+    "readme.md"
+  ],
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "prebuild-dict": "node ./scripts/buildDict.js"
+  },
+  "keywords": [
+    "word-search",
+    "cli",
+    "dictionary",
+    "word-games",
+    "prefix-search",
+    "last-letter"
+  ],
+  "author": "Mochamad Iqbal Maulana",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jimbonlemu/word-hunts-cli"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }
