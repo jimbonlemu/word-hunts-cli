@@ -1,6 +1,14 @@
 /**
  * Constants for Word Hunts CLI
  */
+import fs from 'fs';
+import path from 'path';
+import { __dirname } from "../utils/path.js";
+
+const packageJsonPath = path.join(__dirname, "../../package.json");
+const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+const VERSION = packageJson.version;
+const PACKAGE_NAME = packageJson.name;
 
 export const DEFAULT_CONFIG = {
   TABLE_MODE: true,
@@ -13,7 +21,7 @@ export const MIN_WORD_LENGTH = 2;
 export const TERMINAL_WIDTH_DEFAULT = 80;
 
 export const CLI_USAGE = `
-Word Hunts CLI v0.1.0
+Word Hunts CLI v${VERSION}
 
 USAGE:
   wh [query]           Search for words starting with [query]
@@ -28,7 +36,10 @@ EXAMPLES:
   wh                   Start interactive mode
 `;
 
-export const CLI_VERSION = "word-hunts-cli v0.1.0";
+export const CLI_VERSION = `${PACKAGE_NAME} v${VERSION}`;
 
-export const QUIT_COMMANDS = ["/q", "quit", "exit"];
-export const REFRESH_UI_COMMANDS = ["getui", "refresh", "ui"];
+export const HELP_COMMANDS = ["--help","-h"];
+export const CHECK_VERSION_COMMANDS = ["--version","-v"];
+
+export const QUIT_COMMANDS = ["/q", "/quit", "/exit"];
+export const REFRESH_UI_COMMANDS = ["getui","/refs","/ui"];

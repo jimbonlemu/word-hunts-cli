@@ -1,10 +1,21 @@
 #!/usr/bin/env node
 import readline from "readline";
-import { loadConfig, saveConfig, CLI_USAGE, CLI_VERSION, QUIT_COMMANDS, REFRESH_UI_COMMANDS } from "./src/core/index.js";
+
+// Core modules
+import { loadConfig, saveConfig } from "./src/core/config.js";
 import { searchByPrefix } from "./src/core/search.js";
+
+// Constants
+import { CLI_USAGE, CLI_VERSION, QUIT_COMMANDS, REFRESH_UI_COMMANDS, CHECK_VERSION_COMMANDS, HELP_COMMANDS } from "./src/core/constants.js";
+
+// UI and printing
 import { printResults } from "./src/printers/index.js";
-import { handleCommand } from "./src/commands/index.js";
 import { printHeader } from "./src/ui/index.js";
+
+// Commands
+import { handleCommand } from "./src/commands/index.js";
+
+// Utilities
 import { truncate } from "./src/utils/truncate.js";
 
 let config = loadConfig(); // single source of truth
@@ -65,6 +76,16 @@ function startInteractiveMode() {
         console.log("Babayo!");
         rl.close();
         return;
+      }
+
+      if (CHECK_VERSION_COMMANDS.includes(cmd.toLowerCase())) {
+        console.log(CLI_VERSION,"\n");
+        return ask();
+      }
+
+       if (HELP_COMMANDS.includes(cmd.toLowerCase())) {
+        console.log(CLI_USAGE,"\n");
+        return ask();
       }
 
       if (REFRESH_UI_COMMANDS.includes(cmd.toLowerCase())) {
